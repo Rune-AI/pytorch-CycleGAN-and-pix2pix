@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 import os
 
+from models import create_model
 
 def tensor2im(input_image, imtype=np.uint8):
     """"Converts a Tensor array into a numpy image array.

@@ -1,6 +1,7 @@
-name: pytorch-CycleGAN-and-pix2pix
+name: pix2pix_Erosion
 channels:
 - pytorch
+- conda-forge
 - defaults
 dependencies:
 - python=3.8
@@ -11,7 +12,8 @@ dependencies:
   - dominate==2.6.0
   - torchvision==0.9.1
   - Pillow==8.0.1
-  - numpy==1.19.2
+  - numpy==1.24.1
   - visdom==0.1.8
   - wandb==0.12.18
-
+  - onnx==1.16.0
+  - onnxruntime==1.17.1

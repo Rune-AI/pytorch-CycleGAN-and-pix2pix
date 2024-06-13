@@ -1,6 +1,8 @@
+import numpy
 import torch
 from .base_model import BaseModel
 from . import networks
+from PIL import Image
 
 
 class Pix2PixModel(BaseModel):
@@ -46,7 +48,7 @@ class Pix2PixModel(BaseModel):
         # specify the training losses you want to print out. The training/test scripts will call <BaseModel.get_current_losses>
         self.loss_names = ['G_GAN', 'G_L1', 'D_real', 'D_fake']
         # specify the images you want to save/display. The training/test scripts will call <BaseModel.get_current_visuals>
-        self.visual_names = ['real_A', 'fake_B', 'real_B']
+        self.visual_names = ['real_A', 'fake_B', 'real_B', 'AB_origin']
         # specify the models you want to save to the disk. The training/test scripts will call <BaseModel.save_networks> and <BaseModel.load_networks>
         if self.isTrain:
             self.model_names = ['G', 'D']
@@ -125,3 +127,15 @@ class Pix2PixModel(BaseModel):
         self.optimizer_G.zero_grad()        # set G's gradients to zero
         self.backward_G()                   # calculate graidents for G
         self.optimizer_G.step()             # update G's weights
+    
+    def compute_visuals(self):
+        """Calculate additional output images for visdom and HTML visualization"""
+        AB = Image.open(self.image_paths[0])
+        # AB = AB.convert('RGB')
+        # split AB image into A and B
+        w, h = AB.size
+        w2 = int(w / 2)
+        A = AB.crop((0, 0, w2, h))
+        B = AB.crop((w2, 0, w, h))
+
+        self.AB_origin = torch.tensor(torch.from_numpy(numpy.array(B).astype(numpy.float32) / 65535.0), dtype=torch.float32).unsqueeze(0).unsqueeze(0)

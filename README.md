@@ -1,4 +1,22 @@
 
+# Howdy
+
+This repo is a slight alteration to add more visualizations and export options for our specific usecase.
+
+For the full guide see **confluence**.
+
+The documentation below is the original repo. 
+
+-- Rune
+
+
+___
+___
+
+
+
+
+
 <img src='imgs/horse2zebra.gif' align="right" width=384>
 
 <br><br><br>

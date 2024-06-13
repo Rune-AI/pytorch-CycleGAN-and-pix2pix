@@ -112,7 +112,7 @@ class Visualizer():
         print('Command: %s' % cmd)
         Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 
-    def display_current_results(self, visuals, epoch, save_result):
+    def display_current_results(self, visuals, epoch, save_result, origin_path=None):
         """Display current results on visdom; save current results to an HTML file.
 
         Parameters:
@@ -155,6 +155,9 @@ class Visualizer():
                                     padding=2, opts=dict(title=title + ' images'))
                     label_html = '<table>%s</table>' % label_html
                     self.vis.text(table_css + label_html, win=self.display_id + 2,
+                                  opts=dict(title=title + ' labels'))
+                    if origin_path:
+                        self.vis.text(origin_path, win=self.display_id + 3,
                                   opts=dict(title=title + ' labels'))
                 except VisdomExceptionBase:
                     self.create_visdom_connections()
